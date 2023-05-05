@@ -1,10 +1,8 @@
 ﻿using System;
 namespace PremiaApi.Models
 {
-	public class AddUserRequest
+	public class UpdateUserRequest
 	{
-        public Guid Id { get; set; }
-
         public string UserName { get; set; }
 
         public string UserSurname { get; set; }
@@ -13,8 +11,6 @@ namespace PremiaApi.Models
 
         public string Email { get; set; }
 
-        public DateTime CreateDate { get; set; }
-
         public bool IsSuperUser { get; set; }
 
         public bool IsSupervisor { get; set; }
@@ -22,7 +18,6 @@ namespace PremiaApi.Models
         public bool IsNormalUser { get; set; }
 
         public bool isDeleted { get; set; }
-
     }
 }
 
