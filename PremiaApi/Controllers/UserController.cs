@@ -101,7 +101,7 @@ namespace PremiaApi.Controllers
             {
                 dbContext.Remove(user);
                 await dbContext.SaveChangesAsync();
-                return Ok("Thiss Contact Was Deleted"); 
+                return Ok("Thiss User Was Deleted"); 
             }
 
             return NotFound(); 
