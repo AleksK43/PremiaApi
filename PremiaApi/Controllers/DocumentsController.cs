@@ -14,7 +14,7 @@ namespace PremiaApi.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class DocumentsController : Controller
-	{
+    {
         private readonly PremiaDbContext dbContext;
 
         public DocumentsController(PremiaDbContext dbContext)
@@ -30,7 +30,7 @@ namespace PremiaApi.Controllers
         }
 
         [HttpGet]
-        [Route("id:guid")]
+        [Route("{id:guid}")]
         public async Task<IActionResult> GetDocument([FromRoute] Guid id)
         {
             var document = await dbContext.documents.FindAsync(id);
@@ -39,7 +39,7 @@ namespace PremiaApi.Controllers
             {
                 return NotFound();
             }
-            return Ok(document); 
+            return Ok(document);
         }
 
         [HttpPost]
@@ -65,7 +65,51 @@ namespace PremiaApi.Controllers
             await dbContext.documents.AddAsync(documents);
             await dbContext.SaveChangesAsync();
 
-            return Ok(documents); 
+            return Ok(documents);
+        }
+
+        [HttpPut]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> UpdateDocument([FromRoute] Guid id,DocumentUpdateRequest documentUpdateRequest)
+        {
+            var document = await dbContext.documents.FindAsync();
+            if ( document != null )
+            {
+                document.Customer = documentUpdateRequest.Customer;
+                document.InvoiceNumber = documentUpdateRequest.InvoiceNumber;
+                document.Type = documentUpdateRequest.Type;
+                document.InvoiceOwner = documentUpdateRequest.InvoiceOwner;
+                document.CaseNumber = documentUpdateRequest.CaseNumber;
+                document.Income = documentUpdateRequest.Income;
+                document.TimeConsuming = documentUpdateRequest.TimeConsuming;
+                document.Drive = documentUpdateRequest.Drive;
+                document.Month = documentUpdateRequest.Month;
+                document.InvoiceStatus = documentUpdateRequest.InvoiceStatus;
+                document.IsBonusCleared = documentUpdateRequest.IsBonusCleared;
+                document.ModifyDate = DateTime.Now;
+
+                await dbContext.SaveChangesAsync();
+                return Ok(document);
+            }
+            return NotFound(); 
+        }
+
+
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> DeleteDocument([FromRoute] Guid id)
+        {
+            var document = await dbContext.documents.FindAsync(id);
+
+            if (document != null)
+            {
+                dbContext.Remove(document);
+                await dbContext.SaveChangesAsync();
+                return Ok("Thiss User Was Deleted");
+            }
+
+            return NotFound();
+
         }
 
 

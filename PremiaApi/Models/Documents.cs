@@ -31,6 +31,8 @@ namespace PremiaApi.Models
 
 		public DateTime SettlementDate { get; set; }
 
+		public DateTime ModifyDate { get; set; }
+
 	}
 }
 
