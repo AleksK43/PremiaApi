@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options => options.AddPolicy(name: "UsersPolicy",policy =>
 {
-    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
 }));
 //builder.Services.AddDbContext<PremiaDbContext>(options => options.UseInMemoryDatabase("PremiaAPPSample"));
 

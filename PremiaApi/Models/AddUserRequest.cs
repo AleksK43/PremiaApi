@@ -7,6 +7,8 @@ namespace PremiaApi.Models
 
         public string UserName { get; set; }
 
+        public string Name { get; set; }
+
         public string UserSurname { get; set; }
 
         public string Password { get; set; }
@@ -22,6 +24,7 @@ namespace PremiaApi.Models
         public bool IsNormalUser { get; set; }
 
         public bool isDeleted { get; set; }
+
 
     }
 }
