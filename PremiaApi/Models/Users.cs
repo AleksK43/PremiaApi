@@ -27,6 +27,9 @@ namespace PremiaApi.Controllers.Models
 
 		public bool IsNormalUser { get; set; }
 
+		public string Role { get; set;  }
+
+
 	}
 }
 

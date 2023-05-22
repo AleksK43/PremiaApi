@@ -17,6 +17,10 @@ namespace PremiaApi.Models
 
         public bool IsNormalUser { get; }
 
+        public string Token { get; set; }
+
+        public DateTime TokenExpire { get; set; }
+
     }
 
 }
