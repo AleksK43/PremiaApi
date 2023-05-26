@@ -25,6 +25,8 @@ namespace PremiaApi.Models
 
         public bool isDeleted { get; set; }
 
+        public string? Role { get; set; }
+
 
     }
 }

@@ -3,11 +3,10 @@ namespace PremiaApi.Models
 {
 	public class LoginRequest
 	{
-        public Guid Id { get; set; }
 
         public string UserName { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get;  }
 
         public string Password { get; set; }
 
@@ -17,9 +16,9 @@ namespace PremiaApi.Models
 
         public bool IsNormalUser { get; }
 
-        public string Token { get; set; }
+        public string? Token { get; set; }
 
-        public DateTime TokenExpire { get; set; }
+        public DateTime? TokenExpire { get; set; }
 
     }
 

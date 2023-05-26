@@ -7,7 +7,8 @@ using PremiaApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Text;
-using PremiaApi.Data; 
+using PremiaApi.Data;
+using System.Security.Claims;
 
 namespace PremiaApi.Controllers
 {
@@ -15,7 +16,12 @@ namespace PremiaApi.Controllers
     [Route("api/[controller]")]
 	public class AuthController : Controller 
 	{
-        private readonly PremiaDbContext dbContext;  
+        private readonly PremiaDbContext dbContext;
+
+        public AuthController(PremiaDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddUser(AddUserRequest addUserRequest)
@@ -45,7 +51,27 @@ namespace PremiaApi.Controllers
                 IsSuperUser = addUserRequest.IsSuperUser,
                 IsSupervisor = addUserRequest.IsSupervisor,
                 IsNormalUser = addUserRequest.IsNormalUser,
+                Role = ""
             };
+
+            if (users.IsNormalUser == true)
+            {
+                users.Role = "BasicUser";
+
+            }
+            else if (users.IsSuperUser == true)
+            {
+                users.Role = "Admin";
+
+            }
+            else if ( users.IsSupervisor == true )
+            {
+                users.Role = "Supervisor"; 
+            }else
+            {
+                throw new Exception("Nie można stworzyć następującej kombinacji Ról");
+            }
+
 
             await dbContext.users.AddAsync(users);
             await dbContext.SaveChangesAsync();
@@ -81,20 +107,22 @@ namespace PremiaApi.Controllers
 
             if ((DateTime.UtcNow - tokenKeyLastChanged).TotalHours >= 3)
             {
-                var key = new byte[64];
-                using (var rng = new RNGCryptoServiceProvider())
-                {
-                    rng.GetBytes(key);
-                }
+                var key = Encoding.ASCII.GetBytes("testtesttesttesttesttest");
                 tokenKey = Convert.ToBase64String(key);
                 tokenKeyLastChanged = DateTime.UtcNow;
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var keyBytes = Convert.FromBase64String(tokenKey);
+            var Identity = new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim(ClaimTypes.Name, $"{user.Name} {user.UserSurname}")
+            });
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-
+                Subject = Identity, 
                 Expires = DateTime.UtcNow.AddHours(3),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
             };
