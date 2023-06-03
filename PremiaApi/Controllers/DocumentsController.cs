@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using PremiaApi.Controllers.Models;
 using PremiaApi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PremiaApi.Controllers
 {
@@ -22,7 +23,7 @@ namespace PremiaApi.Controllers
             this.dbContext = dbContext;
         }
 
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllDocuments()
         {
