@@ -23,11 +23,15 @@ namespace PremiaApi.Models
 
         public int Month { get; set; }
 
-        public bool InvoiceStatus { get; set; }
-
-        public bool IsBonusCleared { get; set; }
+        public String InvoiceStatus { get; set; }
 
         public DateTime CreateDate { get; set; }
+
+        public bool NewInvoice { get; }
+
+        public bool PreAccept { get; }
+
+        public bool Accepted { get; }
 
     }
 }

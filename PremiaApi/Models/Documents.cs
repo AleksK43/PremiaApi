@@ -3,7 +3,7 @@ namespace PremiaApi.Models
 {
 	public class Documents
 	{
-		public Guid Id { get; set;  }
+		public Guid Id { get; set; }
 
 		public string Customer { get; set; }
 
@@ -23,15 +23,21 @@ namespace PremiaApi.Models
 
 		public int Month { get; set; }
 
-		public bool InvoiceStatus { get; set; }
-
-		public bool IsBonusCleared { get; set; }
+		public string InvoiceStatus { get; set; }
 
 		public DateTime CreateDate { get; set; }
 
 		public DateTime SettlementDate { get; set; }
 
 		public DateTime ModifyDate { get; set; }
+
+		public bool NewInvoice { get; }
+
+		public bool PreAccept { get; }
+
+		public bool Accepted { get; }
+
+
 
 	}
 }

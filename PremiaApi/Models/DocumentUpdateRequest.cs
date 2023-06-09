@@ -21,9 +21,7 @@ namespace PremiaApi.Models
 
         public int Month { get; set; }
 
-        public bool InvoiceStatus { get; set; }
-
-        public bool IsBonusCleared { get; set; }
+        public string InvoiceStatus { get; set; }
 
         public DateTime CreateDate { get; set; }
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PremiaApi.Data;
 
@@ -11,9 +12,11 @@ using PremiaApi.Data;
 namespace PremiaApi.Migrations
 {
     [DbContext(typeof(PremiaDbContext))]
-    partial class PremiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230609093629_DocUpdate")]
+    partial class DocUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,9 +109,11 @@ namespace PremiaApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("InvoiceStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("InvoiceStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsBonusCleared")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifyDate")
                         .HasColumnType("datetime2");

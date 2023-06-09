@@ -23,7 +23,7 @@ namespace PremiaApi.Controllers
             this.dbContext = dbContext;
         }
 
-        [Authorize]
+        
         [HttpGet]
         public async Task<IActionResult> GetAllDocuments()
         {
@@ -59,7 +59,6 @@ namespace PremiaApi.Controllers
                 Drive = addDocumentRequest.Drive,
                 Month = addDocumentRequest.Month,
                 InvoiceStatus = addDocumentRequest.InvoiceStatus,
-                IsBonusCleared = addDocumentRequest.IsBonusCleared,
                 CreateDate = addDocumentRequest.CreateDate
             };
             documents.CreateDate = DateTime.Now;
@@ -86,7 +85,6 @@ namespace PremiaApi.Controllers
                 document.Drive = documentUpdateRequest.Drive;
                 document.Month = documentUpdateRequest.Month;
                 document.InvoiceStatus = documentUpdateRequest.InvoiceStatus;
-                document.IsBonusCleared = documentUpdateRequest.IsBonusCleared;
                 document.ModifyDate = DateTime.Now;
 
                 await dbContext.SaveChangesAsync();
