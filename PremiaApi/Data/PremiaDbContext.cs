@@ -15,6 +15,9 @@ namespace PremiaApi.Data
 		public DbSet<Users> users { get; set; }
 
 		public DbSet<Documents> documents { get; set; }
+
+		public DbSet<Customers> customers { get; set; }
+
 	}
 }
 
