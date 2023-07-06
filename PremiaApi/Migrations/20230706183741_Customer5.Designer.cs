@@ -12,15 +12,15 @@ using PremiaApi.Data;
 namespace PremiaApi.Migrations
 {
     [DbContext(typeof(PremiaDbContext))]
-    [Migration("20230610204512_Customer Migration2")]
-    partial class CustomerMigration2
+    [Migration("20230706183741_Customer5")]
+    partial class Customer5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -93,6 +93,9 @@ namespace PremiaApi.Migrations
 
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("UserGuid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
