@@ -70,10 +70,10 @@ namespace PremiaApi.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
-        public async Task<IActionResult> UpdateDocument([FromRoute] Guid id,DocumentUpdateRequest documentUpdateRequest)
+        public async Task<IActionResult> UpdateDocument([FromRoute] Guid id, DocumentUpdateRequest documentUpdateRequest)
         {
-            var document = await dbContext.documents.FindAsync();
-            if ( document != null )
+            var document = await dbContext.documents.FindAsync(id);
+            if (document != null)
             {
                 document.Customer = documentUpdateRequest.Customer;
                 document.InvoiceNumber = documentUpdateRequest.InvoiceNumber;
@@ -90,8 +90,9 @@ namespace PremiaApi.Controllers
                 await dbContext.SaveChangesAsync();
                 return Ok(document);
             }
-            return NotFound(); 
+            return NotFound();
         }
+
 
 
         [HttpDelete]
