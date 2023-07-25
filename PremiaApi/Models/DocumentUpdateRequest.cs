@@ -9,7 +9,7 @@ namespace PremiaApi.Models
 
         public string Type { get; set; }
 
-        public string InvoiceOwner { get; set; }
+        public Guid InvoiceOwner { get; set; }
 
         public string CaseNumber { get; set; }
 

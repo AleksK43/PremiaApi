@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using PremiaApi.Controllers.Models;
 using PremiaApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection.Metadata;
 
 namespace PremiaApi.Controllers
 {
@@ -31,10 +32,10 @@ namespace PremiaApi.Controllers
         }
 
         [HttpGet]
-        [Route("{id:guid}")]
-        public async Task<IActionResult> GetDocument([FromRoute] Guid id)
+        [Route("single/{documentId:guid}")]
+        public async Task<IActionResult> GetDocument(Guid documentId)
         {
-            var document = await dbContext.documents.FindAsync(id);
+            var document = await dbContext.documents.FindAsync(documentId);
 
             if (document == null)
             {
@@ -42,6 +43,22 @@ namespace PremiaApi.Controllers
             }
             return Ok(document);
         }
+
+        [HttpGet]
+        [Route("{invoiceOwner:guid}")]
+        public async Task<IActionResult> GetAllUserDocuments([FromRoute] Guid invoiceOwner)
+        {
+            var documents = await dbContext.documents
+                                       .Where(document => document.InvoiceOwner == invoiceOwner)
+                                       .ToListAsync();
+
+            if (!documents.Any())  
+            {
+                return NotFound();
+            }
+            return Ok(documents);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> AddDocument(AddDocumentRequest addDocumentRequest)
@@ -52,7 +69,7 @@ namespace PremiaApi.Controllers
                 Customer = addDocumentRequest.Customer,
                 InvoiceNumber = addDocumentRequest.InvoiceNumber,
                 Type = addDocumentRequest.Type,
-                InvoiceOwner = addDocumentRequest.InvoiceNumber,
+                InvoiceOwner = addDocumentRequest.InvoiceOwner,
                 CaseNumber = addDocumentRequest.CaseNumber,
                 Income = addDocumentRequest.Income,
                 TimeConsuming = addDocumentRequest.TimeConsuming,

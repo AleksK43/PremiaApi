@@ -11,7 +11,7 @@ namespace PremiaApi.Models
 
 		public string Type { get; set; }
 
-		public string InvoiceOwner { get; set; }
+		public Guid InvoiceOwner { get; set; }
 
 		public string CaseNumber { get; set; }
 
@@ -36,8 +36,6 @@ namespace PremiaApi.Models
 		public bool PreAccept { get; }
 
 		public bool Accepted { get; }
-
-
 
 	}
 }
