@@ -59,7 +59,6 @@ namespace PremiaApi.Controllers
             return Ok(documents);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> AddDocument(AddDocumentRequest addDocumentRequest)
         {
@@ -76,7 +75,11 @@ namespace PremiaApi.Controllers
                 Drive = addDocumentRequest.Drive,
                 Month = addDocumentRequest.Month,
                 InvoiceStatus = addDocumentRequest.InvoiceStatus,
-                CreateDate = addDocumentRequest.CreateDate
+                CreateDate = addDocumentRequest.CreateDate,
+                NewInvoice = addDocumentRequest.NewInvoice = true,
+                PreAccept = addDocumentRequest.PreAccept = false,
+                Accepted = addDocumentRequest.Accepted = false
+                
             };
             documents.CreateDate = DateTime.Now;
             await dbContext.documents.AddAsync(documents);

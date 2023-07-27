@@ -31,11 +31,11 @@ namespace PremiaApi.Models
 
 		public DateTime ModifyDate { get; set; }
 
-		public bool NewInvoice { get; }
+		public bool? NewInvoice { get; set; }
 
-		public bool PreAccept { get; }
+		public bool? PreAccept { get; set; }
 
-		public bool Accepted { get; }
+		public bool? Accepted { get; set; }
 
 	}
 }
