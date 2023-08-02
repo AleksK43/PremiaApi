@@ -117,7 +117,8 @@ namespace PremiaApi.Controllers
             var Identity = new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Role, user.Role),
-                new Claim(ClaimTypes.Name, $"{user.Name} {user.UserSurname}")
+                new Claim(ClaimTypes.Name, $"{user.Name} {user.UserSurname}"),
+                new Claim("user_id", user.Id.ToString())
             });
 
             var tokenDescriptor = new SecurityTokenDescriptor
