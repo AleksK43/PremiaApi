@@ -12,15 +12,15 @@ using PremiaApi.Data;
 namespace PremiaApi.Migrations
 {
     [DbContext(typeof(PremiaDbContext))]
-    [Migration("20230609093629_DocUpdate")]
-    partial class DocUpdate
+    [Migration("20231111204709_CustomerMigration1")]
+    partial class CustomerMigration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -78,11 +78,39 @@ namespace PremiaApi.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("PremiaApi.Models.Customers", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserGuid")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("customers");
+                });
+
             modelBuilder.Entity("PremiaApi.Models.Documents", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("Accepted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("CaseNumber")
                         .IsRequired()
@@ -105,21 +133,24 @@ namespace PremiaApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("InvoiceOwner")
+                    b.Property<Guid>("InvoiceOwner")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("InvoiceStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("InvoiceStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsBonusCleared")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifyDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Month")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("NewInvoice")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("PreAccept")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("SettlementDate")
                         .HasColumnType("datetime2");

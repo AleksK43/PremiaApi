@@ -5,7 +5,7 @@
 namespace PremiaApi.Migrations
 {
     /// <inheritdoc />
-    public partial class Auth2 : Migration
+    public partial class NewCustomerMigratoion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -47,19 +47,11 @@ namespace PremiaApi.Controllers
 		[Route("{id:guid}")]
 		public async Task<IActionResult> UpdateCustomer([FromRoute] Guid id, UpdateCustomerRequest updateCustomerRequest)
 		{
-			var customer = await dbContext.customers.FindAsync();
+			var customer = await dbContext.customers.FindAsync(id);
 			if (customer != null )
 			{
 				customer.CustomerName = updateCustomerRequest.CustomerName;
 				customer.IsDeleted = updateCustomerRequest.IsDeleted;
-				if ( updateCustomerRequest.IsDeleted == true )
-				{
-					customer.DeleteDate = DateTime.Now;
-				}
-				else
-                {
-					customer.DeleteDate = null; 
-				}
                 customer.UserGuid = updateCustomerRequest.UserGuid;
 
 				await dbContext.SaveChangesAsync();
@@ -67,6 +59,25 @@ namespace PremiaApi.Controllers
 			}
 			return NotFound(); 
 		}
+
+		[HttpDelete]
+		[Route("{id:guid}")]
+		public async Task<IActionResult> DeleteCustomer([FromRoute] Guid id)
+		{
+			var customer = await dbContext.customers.FindAsync(id);
+
+			if (customer != null )
+			{
+				dbContext.Remove(customer);
+				customer.DeleteDate = DateTime.Now;
+				customer.IsDeleted = true;
+				await dbContext.SaveChangesAsync();
+				return Ok("Customer Deleted");
+			}
+			return NotFound(); 
+		}
+
+
 
 	}
 }

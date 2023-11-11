@@ -17,7 +17,7 @@ namespace PremiaApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "7.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -85,14 +85,15 @@ namespace PremiaApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DeleteDate")
+                    b.Property<DateTime>("DeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsDeleted")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("UserGuid")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserGuid")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
